@@ -57,15 +57,48 @@ app.get('/v1/estado/:uf', function(request, response){
     response.status(estado.status_code).json(estado)
 })
 
-app.get('/v1/estados/regiao/:id', function(request, response){
-    /* let sigla = request.query.uf
-    let estado = request.query.estado
-    let regiao = request.query.regiao
-    let id = request.params.id
-    console.log(sigla)
-    console.log(estado)
-    console.log(regiao)
-    console.log(id) */
+//EndPoint que retorna capitais por sigla
+app.get('/v1/capital/:uf', function(request, response){
+    //Variavel que recebe o parametro da url
+    let sigla = request.params.uf
+
+    //Acessa a função
+    let capital = dados.getCapitalBySigla(sigla)
+    //Retorna o status e o JSON
+    response.status(capital.status_code).json(capital)
+})
+
+//EndPoint que retorna estados por regiao
+app.get('/v1/estados/regiao/:regiao', function(request, response){
+    //Variavel que recebe o parametro da url
+    let nomeRegiao = request.params.regiao
+
+    //Acessa a função
+    let estado = dados.getEstadosByRegiao(nomeRegiao)
+    //Retorna o status e o JSON
+    response.status(estado.status_code).json(estado)
+})
+
+//EndPoint que mostra o histórico de capitais do país
+app.get('/v1/capitais', function(request, response){
+    //Acessa a função
+    let verificarCapitais = dados.getVerifyCapitaisDoPais()
+
+    //Retorna o status e o JSON
+    response.status(verificarCapitais.status_code).json(verificarCapitais)
+
+})
+
+//EndPoint que retorna as cidades do estado
+app.get('/v1/cidades/:uf', function(request, response){
+    //Variavel que recebe o parametro da url
+    let sigla = request.params.uf
+
+    //Acessa a função
+    let cidades = dados.getCidadesBySigla(sigla)
+    //Retorna o status e o JSON
+    response.status(cidades.status_code).json(cidades)
+
 })
 
 //Start na API
